@@ -1,0 +1,3 @@
+@echo off
+echo Starting Peg Solitaire game...
+javaw -jar Solitaire.jar

@@ -1,0 +1,47 @@
+<project name="Solitaire" basedir="." default="zip">
+
+	<property name="src.dir" value="src" />
+	<property name="resources.dir" value="resources" />
+	<property name="dist.resources.dir" value="${resources.dir}/dist" />
+	<property name="package.name" value="opmj14" />
+	<property name="view.package" value="${package.name}.solitaire.view" />
+
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}" />
+	<property name="dist.dir" value="dist" />
+
+	<property name="main-class" value="${view.package}.SolitaireSpel" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="cleandist">
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" />
+	</target>
+
+	<target name="jar" depends="compile">
+		<copy todir="${classes.dir}/${package.name}">
+			<fileset dir="${resources.dir}/${package.name}" />
+		</copy>
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="zip" depends="jar, cleandist">
+		<zip destfile="${dist.dir}/${ant.project.name}.zip">
+			<fileset dir="${jar.dir}" includes="${ant.project.name}.jar" />
+			<fileset dir="${dist.resources.dir}" />
+		</zip>
+	</target>
+</project>
