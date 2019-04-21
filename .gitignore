@@ -1,5 +1,7 @@
 archives/
 releases/
+build/
+dist/
 
 # Compiled class file
 *.class
